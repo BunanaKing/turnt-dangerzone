@@ -592,6 +592,7 @@ MonoBehaviour:
   ballDestroyedCounter: 0
   ballCreatedCounter: 0
   spawnLevels: 0a000000140000001e0000002800000032000000
+  timer: {fileID: 710042701}
   initAmountOfBalls: 5
   colorButtonsSum: 0
   timeUntilError: 0
@@ -607,7 +608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c29e864f119a145a511cd5d53b4dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countDownSeconds: 20
+  countDownSeconds: 60
 --- !u!1001 &811501533
 Prefab:
   m_ObjectHideFlags: 0

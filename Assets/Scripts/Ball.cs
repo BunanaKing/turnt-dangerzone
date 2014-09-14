@@ -13,7 +13,8 @@ public class Ball : MonoBehaviour
 
     void Update()
     {
-
+        //Acelerometro
+        transform.Translate(Input.acceleration.x, 0, 0);
     }
 
     private void OnCollisionEnter2D(Collision2D collider)

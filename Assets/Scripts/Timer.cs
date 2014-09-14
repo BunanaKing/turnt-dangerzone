@@ -31,17 +31,19 @@ public class Timer : MonoBehaviour
 
         restSeconds = countDownSeconds + addedSeconds - guiTime;
 
-        //display messages or whatever here -->do stuff based on your timer
-        if (restSeconds == 60)
-        {
-            print("One Minute Left");
-        }
-        if (restSeconds <= 0)
-        {
-            print("Time is Over");
-            enabled = false;
-            //do stuff here
-        }
+		if(enabled){
+        	//display messages or whatever here -->do stuff based on your timer
+	        if (restSeconds == 60)
+	        {
+	            //print("One Minute Left");
+	        }
+	        if (restSeconds <= 0)
+	        {
+	            print("Time is Over");
+	            enabled = false;
+	            //do stuff here
+	        }
+		}
 
         //display the timer
         roundedRestSeconds = Mathf.CeilToInt(restSeconds);
