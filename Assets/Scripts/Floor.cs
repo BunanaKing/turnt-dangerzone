@@ -7,16 +7,15 @@ public class Floor : MonoBehaviour
     public GameObject ball_go;
     public int ballDestroyedCounter = 0;
     public int ballCreatedCounter = 0;
+    public int maxAmountOfBalls = 30;
     public int[] spawnLevels;
-    public Timer timer;
+
     public int initAmountOfBalls = 5;
 
     private int currentIncrement = 0;
     private int amountOfBallsToSpawn = 1;
     
-    //public bool changingColor = false;
     private SpriteRenderer spriteRenderer;
-    
     private int karmaCount = 0;
     private int ballsIdIndex = 1;
     private Dictionary<int, Color> ballsColliding = new Dictionary<int, Color>();
@@ -30,8 +29,7 @@ public class Floor : MonoBehaviour
     void Start()
     {
         ballCreatedCounter += initAmountOfBalls;
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        //timer = GetComponent<Timer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();   
 
         for (int i = 0; i < initAmountOfBalls; i++)
         {
@@ -46,11 +44,6 @@ public class Floor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!timer.enabled)
-        {
-            //Termino el juego
-            ended = true;
-        }
 
         Color aux = Color.black;
         if (!ended)
@@ -223,7 +216,7 @@ public class Floor : MonoBehaviour
                     ballDestroyedCounter++;
                     ballCreatedCounter--;
 
-                    if (ballCreatedCounter < 40)
+                    if (ballCreatedCounter < maxAmountOfBalls)
                     {
                         if (currentIncrement < spawnLevels.Length - 1) { 
                             if (ballDestroyedCounter > spawnLevels[currentIncrement])
@@ -251,5 +244,10 @@ public class Floor : MonoBehaviour
     void OnGUI()
     {
         GUI.Label(new Rect(120, 20, 100, 30), ballDestroyedCounter + " balls");
+    }
+
+    public void EndGame()
+    {
+        ended = true;
     }
 }
