@@ -4,10 +4,10 @@ using System.Collections;
 public class Timer : MonoBehaviour
 {
     private float startTime;
-    private float restSeconds;
+    public float restSeconds;
     private float roundedRestSeconds;
     private float displaySeconds;
-    private float displayMinutes;
+    private int displayMinutes;
     private float addedSeconds = 0;
 
     public int countDownSeconds;
@@ -15,6 +15,7 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
+        
     }
 
     public void StartTimer()
@@ -31,24 +32,26 @@ public class Timer : MonoBehaviour
 
         restSeconds = countDownSeconds + addedSeconds - guiTime;
 
-        //display messages or whatever here -->do stuff based on your timer
-        if (restSeconds == 60)
-        {
-            print("One Minute Left");
-        }
-        if (restSeconds <= 0)
-        {
-            print("Time is Over");
-            enabled = false;
-            //do stuff here
-        }
+		if(enabled){
+        	//display messages or whatever here -->do stuff based on your timer
+	        if (restSeconds == 60)
+	        {
+	            //print("One Minute Left");
+	        }
+	        if (restSeconds <= 0)
+	        {
+	            print("Time is Over");
+	            enabled = false;
+	            //do stuff here
+	        }
+		}
 
         //display the timer
         roundedRestSeconds = Mathf.CeilToInt(restSeconds);
-        displaySeconds = roundedRestSeconds % 60;
-        displayMinutes = roundedRestSeconds / 60;
+		displaySeconds = roundedRestSeconds % 60;
+        displayMinutes = (int)(roundedRestSeconds / 60);
+		string text = string.Format("{0:00}:{1:00}", displayMinutes, displaySeconds);
 
-        string text = string.Format("{0:00}:{1:00}", displayMinutes, displaySeconds);
         GUI.Label(new Rect(20, 20, 100, 30), text);
     }
 
