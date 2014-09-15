@@ -16,7 +16,6 @@ public class Floor : MonoBehaviour
     private int amountOfBallsToSpawn = 1;
     
     private SpriteRenderer spriteRenderer;
-    private int karmaCount = 0;
     private int ballsIdIndex = 1;
     private Dictionary<int, Color> ballsColliding = new Dictionary<int, Color>();
     bool existsError = false;
@@ -25,9 +24,15 @@ public class Floor : MonoBehaviour
     public int colorButtonsSum = 0;
     public float timeUntilError = 0f;
 
+    // Spam
+    public SpamBarScript spam;
+
     // Use this for initialization
     void Start()
     {
+        spam = FindObjectOfType<SpamBarScript>();
+        spam.spamFull = SpamFull;
+
         ballCreatedCounter += initAmountOfBalls;
         spriteRenderer = GetComponent<SpriteRenderer>();   
 
@@ -90,8 +95,7 @@ public class Floor : MonoBehaviour
 
     public void IncrementKarmaMeter()
     {
-        karmaCount++;
-        Debug.LogError("Spam! Ahora el Karma es: " + karmaCount);
+        spam.Increase();
     }
 
     public void AddColor(Button.BallColor color)
@@ -249,5 +253,10 @@ public class Floor : MonoBehaviour
     public void EndGame()
     {
         ended = true;
+    }
+
+    private void SpamFull()
+    {
+        Debug.Log("Spam full!");
     }
 }
