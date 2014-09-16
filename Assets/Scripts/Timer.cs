@@ -4,13 +4,14 @@ using System.Collections;
 public class Timer : MonoBehaviour
 {
     private float startTime;
-    public float restSeconds;
+    private float restSeconds;
     private float roundedRestSeconds;
     private float displaySeconds;
     private int displayMinutes;
     private float addedSeconds = 0;
 
     public int countDownSeconds;
+    public GUIText timerText;
 
 
     void Start()
@@ -52,7 +53,8 @@ public class Timer : MonoBehaviour
         displayMinutes = (int)(roundedRestSeconds / 60);
 		string text = string.Format("{0:00}:{1:00}", displayMinutes, displaySeconds);
 
-        GUI.Label(new Rect(20, 20, 100, 30), text);
+        timerText.text = text;
+        //GUI.Label(new Rect(20, 20, 100, 30), text);
     }
 
     public void Add(int seconds)

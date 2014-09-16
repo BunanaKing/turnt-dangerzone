@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 public class Floor : MonoBehaviour
 {
+
+    public delegate void ScoreAdded(int points);
+    public static event ScoreAdded OnScoreAdding;
+
     public GameObject ball_go;
     public int ballDestroyedCounter = 0;
     public int ballCreatedCounter = 0;
@@ -19,6 +23,7 @@ public class Floor : MonoBehaviour
     private int ballsIdIndex = 1;
     private Dictionary<int, Color> ballsColliding = new Dictionary<int, Color>();
     bool existsError = false;
+    bool spamOverHeated = false;
     private bool ended = false;
 
     public int colorButtonsSum = 0;
@@ -32,6 +37,7 @@ public class Floor : MonoBehaviour
     {
         spam = FindObjectOfType<SpamBarScript>();
         spam.spamFull = SpamFull;
+        spam.spamEmpty = SpamEmpty;
 
         ballCreatedCounter += initAmountOfBalls;
         spriteRenderer = GetComponent<SpriteRenderer>();   
@@ -100,6 +106,9 @@ public class Floor : MonoBehaviour
 
     public void AddColor(Button.BallColor color)
     {
+        if (spamOverHeated)
+            return;
+
         switch (color)
         {
             case Button.BallColor.Red:
@@ -167,6 +176,9 @@ public class Floor : MonoBehaviour
 
     public void RemoveColor(Button.BallColor color)
     {
+        if (spamOverHeated)
+            return;
+
         switch (color)
         {
             case Button.BallColor.Red:
@@ -219,6 +231,8 @@ public class Floor : MonoBehaviour
                     ballsColliding.Remove(ball.id);
                     ballDestroyedCounter++;
                     ballCreatedCounter--;
+                    if (OnScoreAdding != null)
+                        OnScoreAdding(100);
 
                     if (ballCreatedCounter < maxAmountOfBalls)
                     {
@@ -258,5 +272,11 @@ public class Floor : MonoBehaviour
     private void SpamFull()
     {
         Debug.Log("Spam full!");
+        colorButtonsSum = 0;
+        spamOverHeated = true;
+    }
+    private void SpamEmpty()
+    {
+        spamOverHeated = false;
     }
 }

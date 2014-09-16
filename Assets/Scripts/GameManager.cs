@@ -5,8 +5,9 @@ public class GameManager : MonoBehaviour {
 
     public Timer timer;
     public Floor floor;
-    private bool prevoiusEnabled = false;
+    public Score score;
 
+    private bool prevoiusEnabled = false;
     private bool gameEnded = false;
 
 	// Use this for initialization
@@ -19,7 +20,6 @@ public class GameManager : MonoBehaviour {
         if (!prevoiusEnabled && prevoiusEnabled != enabled)
         {
             //Empieza el juego
-            Debug.Log("Start Game");
             prevoiusEnabled = enabled;
             timer.StartTimer();
         }
