@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class Floor : MonoBehaviour
 {
+    public delegate void ScoreAdded(int points);
+    public static event ScoreAdded OnScoreAdding;
+
     public GameObject ball_go;
     public int ballDestroyedCounter = 0;
     public int ballCreatedCounter = 0;
@@ -14,11 +17,12 @@ public class Floor : MonoBehaviour
 
     private int currentIncrement = 0;
     private int amountOfBallsToSpawn = 1;
-    
+
     private SpriteRenderer spriteRenderer;
     private int ballsIdIndex = 1;
     private Dictionary<int, Color> ballsColliding = new Dictionary<int, Color>();
     bool existsError = false;
+    bool spamOverHeated = false;
     private bool ended = false;
 
     public int colorButtonsSum = 0;
@@ -27,37 +31,37 @@ public class Floor : MonoBehaviour
     // Spam
     public SpamBarScript spam;
 
-    // Use this for initialization
     void Start()
     {
         spam = FindObjectOfType<SpamBarScript>();
         spam.spamFull = SpamFull;
+        spam.spamEmpty = SpamEmpty;
 
         ballCreatedCounter += initAmountOfBalls;
-        spriteRenderer = GetComponent<SpriteRenderer>();   
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         for (int i = 0; i < initAmountOfBalls; i++)
         {
             GameObject new_ball = (GameObject)GameObject.Instantiate(ball_go);
             Ball ballScript = new_ball.GetComponent<Ball>();
-			ballScript.id = ballsIdIndex++;
-			ballScript.floor = this;
-			ballScript.Reset();
+            ballScript.id = ballsIdIndex++;
+            ballScript.floor = this;
+            ballScript.Reset();
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-
         Color aux = Color.black;
         if (!ended)
         {
 
             if (timeUntilError > 0)
                 timeUntilError -= Time.time;
-            if (timeUntilError <= 0) {                
-                if (existsError) { 
+            if (timeUntilError <= 0)
+            {
+                if (existsError)
+                {
                     existsError = false;
                     IncrementKarmaMeter();
                 }
@@ -87,10 +91,10 @@ public class Floor : MonoBehaviour
                     aux = Color.white;
                     break;
             }
-            
+
         }
         spriteRenderer.color = aux;
-   
+
     }
 
     public void IncrementKarmaMeter()
@@ -100,6 +104,9 @@ public class Floor : MonoBehaviour
 
     public void AddColor(Button.BallColor color)
     {
+        if (spamOverHeated)
+            return;
+
         switch (color)
         {
             case Button.BallColor.Red:
@@ -140,7 +147,7 @@ public class Floor : MonoBehaviour
         }
 
         timeUntilError = 0.2f;
-        if (IsColorColliding(aux)) 
+        if (IsColorColliding(aux))
         {
             if (existsError)
             {
@@ -149,8 +156,8 @@ public class Floor : MonoBehaviour
         }
         else
         {
-            existsError = true;                        
-        }        
+            existsError = true;
+        }
     }
 
     private bool IsColorColliding(Color barColor)
@@ -167,6 +174,9 @@ public class Floor : MonoBehaviour
 
     public void RemoveColor(Button.BallColor color)
     {
+        if (spamOverHeated)
+            return;
+
         switch (color)
         {
             case Button.BallColor.Red:
@@ -181,10 +191,10 @@ public class Floor : MonoBehaviour
         }
     }
 
-    public void NotifyBallCollision(int id,  Color ballColor)
+    public void NotifyBallCollision(int id, Color ballColor)
     {
         if (!ended)
-        {            
+        {
             if (!ballsColliding.ContainsKey(id))
             {
                 ballsColliding[id] = ballColor;
@@ -195,7 +205,7 @@ public class Floor : MonoBehaviour
     public void NotifyBallExitCollision(int id)
     {
         if (!ended)
-        {            
+        {
             if (ballsColliding.ContainsKey(id))
             {
                 ballsColliding.Remove(id);
@@ -209,20 +219,23 @@ public class Floor : MonoBehaviour
         if (!ended)
         {
             if (collider.gameObject.tag == "Ball")
-            {                
+            {
                 Ball ball = collider.gameObject.GetComponent<Ball>();
 
                 // && esto quiere decir que esta cambiando de color
-                if (ball.GetComponent<SpriteRenderer>().color == spriteRenderer.color && timeUntilError <= 0) 
+                if (ball.GetComponent<SpriteRenderer>().color == spriteRenderer.color && timeUntilError <= 0)
                 {
                     Destroy(collider.gameObject);
                     ballsColliding.Remove(ball.id);
                     ballDestroyedCounter++;
                     ballCreatedCounter--;
+                    if (OnScoreAdding != null)
+                        OnScoreAdding(100);
 
                     if (ballCreatedCounter < maxAmountOfBalls)
                     {
-                        if (currentIncrement < spawnLevels.Length - 1) { 
+                        if (currentIncrement < spawnLevels.Length - 1)
+                        {
                             if (ballDestroyedCounter > spawnLevels[currentIncrement])
                             {
                                 currentIncrement++;
@@ -258,5 +271,12 @@ public class Floor : MonoBehaviour
     private void SpamFull()
     {
         Debug.Log("Spam full!");
+        colorButtonsSum = 0;
+        spamOverHeated = true;
+    }
+
+    private void SpamEmpty()
+    {
+        spamOverHeated = false;
     }
 }
