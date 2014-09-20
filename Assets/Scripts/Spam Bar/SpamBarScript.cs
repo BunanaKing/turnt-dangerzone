@@ -30,7 +30,7 @@ public class SpamBarScript : MonoBehaviour
 
         spamIconGO = GameObject.FindWithTag("spam_icon");
         spamIconGO.SetActive(false);
-        
+
         Reset();
     }
 
@@ -46,14 +46,14 @@ public class SpamBarScript : MonoBehaviour
             else if (spamScale.x > 0)
             {
                 spamScale.x -= moveDownSpeed;
-            }            
+            }
 
             if (spamScale.x >= maxXScale)
             {
                 spamScale.x = maxXScale;
                 isSpamFull = true;
-                spamIconGO.SetActive(true);                
-                spamFull();                
+                spamIconGO.SetActive(true);
+                spamFull();
             }
         }
         else
@@ -91,8 +91,6 @@ public class SpamBarScript : MonoBehaviour
     public void Increase()
     {
         if (spamScale.x < maxXScale)
-        {
             addValue += step;
-        }
     }
 }

@@ -1,8 +1,9 @@
 fileFormatVersion: 2
-guid: 889419b7eafbac94690562101ee39290
+guid: bf6a5ccdedb9a6741beb5f6f7da4fce2
 TextureImporter:
   fileIDToRecycleName:
-    21300000: karma_red
+    21300000: karma_red2
+    21300002: karma_red
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,9 +27,9 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 1
     mipBias: -1
-    wrapMode: -1
+    wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50

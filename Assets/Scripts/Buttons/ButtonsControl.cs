@@ -3,7 +3,9 @@ using System.Collections;
 
 public class ButtonsControl : MonoBehaviour
 {
-    public Button[] buttons;
+    public Button button_red;
+    public Button button_yellow;
+    public Button button_blue;
     public Floor floor;
 
     void Start()
@@ -15,79 +17,34 @@ public class ButtonsControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             floor.AddColor(Button.BallColor.Red);
-            foreach (Button button in buttons)
-            {
-                if (button.color == Button.BallColor.Red)
-                {
-                    button.PressButton();
-                    break;
-                }
-            }
+            button_red.PressButton();
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            floor.RemoveColor(Button.BallColor.Red);
+            button_red.ReleaseButton();
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             floor.AddColor(Button.BallColor.Yellow);
-            foreach (Button button in buttons)
-            {
-                if (button.color == Button.BallColor.Yellow)
-                {
-                    button.PressButton();
-                    break;
-                }
-            }
+            button_yellow.PressButton();
+        }
+        else if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            floor.RemoveColor(Button.BallColor.Yellow);
+            button_yellow.ReleaseButton();
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             floor.AddColor(Button.BallColor.Blue);
-            foreach (Button button in buttons)
-            {
-                if (button.color == Button.BallColor.Blue)
-                {
-                    button.PressButton();
-                    break;
-                }
-            }
+            button_blue.PressButton();
         }
-
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
-        {
-            floor.RemoveColor(Button.BallColor.Red);
-            foreach (Button button in buttons)
-            {
-                if (button.color == Button.BallColor.Red)
-                {
-                    button.ReleaseButton();
-                    break;
-                }
-            }
-        }
-
-        if (Input.GetKeyUp(KeyCode.DownArrow))
-        {
-            floor.RemoveColor(Button.BallColor.Yellow);
-            foreach (Button button in buttons)
-            {
-                if (button.color == Button.BallColor.Yellow)
-                {
-                    button.ReleaseButton();
-                    break;
-                }
-            }
-        }
-
-        if (Input.GetKeyUp(KeyCode.RightArrow))
+        else if (Input.GetKeyUp(KeyCode.RightArrow))
         {
             floor.RemoveColor(Button.BallColor.Blue);
-            foreach (Button button in buttons)
-            {
-                if (button.color == Button.BallColor.Blue)
-                {
-                    button.ReleaseButton();
-                    break;
-                }
-            }
+            button_blue.ReleaseButton();
         }
 
         // Look for all fingers
@@ -101,7 +58,7 @@ public class ButtonsControl : MonoBehaviour
                 //Touch are screens location. Convert to world
                 Vector3 position = Camera.main.ScreenToWorldPoint(touch.position);
 
-                foreach (Button button in buttons)
+                foreach (Button button in GetComponentsInChildren<Button>())
                 {
                     if (button.collider2D.OverlapPoint(position))
                     {
@@ -116,7 +73,7 @@ public class ButtonsControl : MonoBehaviour
                 //Touch are screens location. Convert to world
                 Vector3 position = Camera.main.ScreenToWorldPoint(touch.position);
 
-                foreach (Button button in buttons)
+                foreach (Button button in GetComponentsInChildren<Button>())
                 {
                     if (button.collider2D.OverlapPoint(position))
                     {

@@ -13,10 +13,8 @@ public class Timer : MonoBehaviour
     public int countDownSeconds;
     public GUIText timerText;
 
-
     void Start()
     {
-        
     }
 
     public void StartTimer()
@@ -33,25 +31,26 @@ public class Timer : MonoBehaviour
 
         restSeconds = countDownSeconds + addedSeconds - guiTime;
 
-		if(enabled){
-        	//display messages or whatever here -->do stuff based on your timer
-	        if (restSeconds == 60)
-	        {
-	            //print("One Minute Left");
-	        }
-	        if (restSeconds <= 0)
-	        {
-	            print("Time is Over");
-	            enabled = false;
-	            //do stuff here
-	        }
-		}
+        if (enabled)
+        {
+            //display messages or whatever here -->do stuff based on your timer
+            if (restSeconds == 60)
+            {
+                //print("One Minute Left");
+            }
+            if (restSeconds <= 0)
+            {
+                print("Time is Over");
+                enabled = false;
+                //do stuff here
+            }
+        }
 
         //display the timer
         roundedRestSeconds = Mathf.CeilToInt(restSeconds);
-		displaySeconds = roundedRestSeconds % 60;
+        displaySeconds = roundedRestSeconds % 60;
         displayMinutes = (int)(roundedRestSeconds / 60);
-		string text = string.Format("{0:00}:{1:00}", displayMinutes, displaySeconds);
+        string text = string.Format("{0:00}:{1:00}", displayMinutes, displaySeconds);
 
         timerText.text = text;
         //GUI.Label(new Rect(20, 20, 100, 30), text);

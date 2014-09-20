@@ -14,25 +14,23 @@ public class Ball : MonoBehaviour
     void Update()
     {
         //Acelerometro
-        transform.Translate(Input.acceleration.x/10, 0, 0);
+        transform.Translate(Accelerometer.X(), 0, 0);
     }
 
     private void OnCollisionEnter2D(Collision2D collider)
-    {        
+    {
         if (collider.gameObject.tag == "Floor")
         {
             Color ballColor = this.GetComponent<SpriteRenderer>().color;
-            
+
             floor.NotifyBallCollision(this.id, ballColor);
-        }        
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collider)
     {
         if (collider.gameObject.tag == "Floor")
-        {            
             floor.NotifyBallExitCollision(this.id);
-        }
     }
 
     public void Reset()
@@ -60,7 +58,7 @@ public class Ball : MonoBehaviour
         else if (r < 0.833333)
         {
             color = Button.BallColor.Purple;
-			renderer.color = new Color(178/255F, 0F, 255/255F);
+            renderer.color = new Color(178 / 255F, 0F, 255 / 255F);
         }
         else if (r < 0.9166666)
         {
@@ -70,7 +68,7 @@ public class Ball : MonoBehaviour
         else
         {
             color = Button.BallColor.Orange;
-			renderer.color = new Color(255/255F, 120/255F, 0F);
+            renderer.color = new Color(255 / 255F, 120 / 255F, 0F);
         }
     }
 }

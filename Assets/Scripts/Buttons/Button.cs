@@ -3,9 +3,9 @@ using System.Collections;
 
 public class Button : MonoBehaviour
 {
-	public enum BallColor { Red, Yellow, Blue, Green, Orange, Purple }
+    public enum BallColor { Red, Yellow, Blue, Green, Orange, Purple }
 
-	public BallColor color;
+    public BallColor color;
 
     public Sprite buttonImage;
     public Sprite pressedButtonImage;
@@ -18,7 +18,6 @@ public class Button : MonoBehaviour
 
     void Update()
     {
-
     }
 
     public void PressButton()
