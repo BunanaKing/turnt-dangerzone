@@ -3,7 +3,7 @@ using System.Collections;
 
 public interface ISpecialBall
 {
-    void Initialize(float _timeToLive, float _timeCreated);
+    void Initialize(float _timeToLive, float _timeCreated, GameObject _parent_go);
     void CheckLifeTimer();
-    void MakeSpecialty(Color _realColor);
+    bool MakeSpeciality(Color _realColor);
 }

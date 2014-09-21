@@ -18,7 +18,7 @@ public class Ball : MonoBehaviour
     public void SetSpecialBallType(ISpecialBall _specialBallType)
     {
         specialBallType = _specialBallType;
-        specialBallType.Initialize(this.timeToLive, this.timeCreated);
+        specialBallType.Initialize(this.timeToLive, this.timeCreated, this.gameObject);
     }
 
     void Start()
@@ -88,16 +88,18 @@ public class Ball : MonoBehaviour
         renderer.color = realColor;
     }
 
-    public void DestroyYourself()
+    public bool DestroyYourself()
     {
         deadBall = true;
         if (specialBall)
         {
             //Do Bonus Speciallity
-            specialBallType.MakeSpecialty(this.realColor);
+            deadBall = specialBallType.MakeSpeciality(this.realColor);
         }
 
-        Destroy(this.gameObject);
+        if (deadBall)
+            Destroy(this.gameObject);
+        return deadBall;
     }
 
 }
