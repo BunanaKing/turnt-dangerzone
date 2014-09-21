@@ -7,15 +7,9 @@ public class Floor : MonoBehaviour
     public static event ScoreAdded OnScoreAdding;
 
     public GameObject ball_go;
+    public GameObject ballSpecial_go;
     public int ballDestroyedCounter = 0;
-    public int ballCreatedCounter = 0;
-    public int maxAmountOfBalls = 30;
-    public int[] spawnLevels;
-
-    public int initAmountOfBalls = 5;
-
-    private int currentIncrement = 0;
-    private int amountOfBallsToSpawn = 1;
+    public int initAmountOfBalls = 20;
 
     private SpriteRenderer spriteRenderer;
     private int ballsIdIndex = 1;
@@ -39,9 +33,13 @@ public class Floor : MonoBehaviour
 
         ballsColliding = new List<Ball>();
         ballsToKill = new List<Ball>();
-        ballCreatedCounter += initAmountOfBalls;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        CreateStartBalls(initAmountOfBalls);
+    }
+
+    private void CreateStartBalls(int initAmountOfBalls)
+    {
         for (int i = 0; i < initAmountOfBalls; i++)
         {
             GameObject new_ball = (GameObject)GameObject.Instantiate(ball_go);
@@ -50,6 +48,14 @@ public class Floor : MonoBehaviour
             ballScript.floor = this;
             ballScript.Reset();
         }
+
+        //Crear una special ball de prueba
+        GameObject newBallSpecial = (GameObject)GameObject.Instantiate(ballSpecial_go);
+        Ball ballSpecialScript = newBallSpecial.GetComponent<Ball>();
+        ballSpecialScript.id = ballsIdIndex++;
+        ballSpecialScript.floor = this;
+        ballSpecialScript.specialBall = true;
+        ballSpecialScript.Reset();
     }
 
     void Update()
@@ -171,17 +177,17 @@ public class Floor : MonoBehaviour
 
                         ballsToKill.Add(ball);
                         ballDestroyedCounter++;
-                        ballCreatedCounter--;
 
                         if (OnScoreAdding != null)
-                            OnScoreAdding(100);
-
-                        CreateNewBalls();
+                            OnScoreAdding(100);                        
                     }
                 }
+
+                CreateNewBalls(ballsToKill.Count);
+
                 foreach (Ball ball in ballsToKill)
                 {
-                    Destroy(ball.gameObject);
+                    ball.DestroyYourself();
                     ballsColliding.Remove(ball);
                 }
 
@@ -210,31 +216,21 @@ public class Floor : MonoBehaviour
         {
             ballsToKill.Add(ball);
             ballDestroyedCounter++;
-            ballCreatedCounter--;
 
             if (OnScoreAdding != null)
                 OnScoreAdding(100);
 
-            CreateNewBalls();
+            CreateNewBalls(1);
 
             Destroy(ball.gameObject);
             ballsColliding.Remove(ball);
         }
     }
 
-    private void CreateNewBalls()
+    public void CreateNewBalls(int amountOfBallsToSpawn)
     {
-        if (ballCreatedCounter < maxAmountOfBalls)
+        if (amountOfBallsToSpawn > 0)
         {
-            if (currentIncrement < spawnLevels.Length - 1)
-            {
-                if (ballDestroyedCounter > spawnLevels[currentIncrement])
-                {
-                    currentIncrement++;
-                    amountOfBallsToSpawn++;
-                }
-            }
-
             for (int i = 0; i < amountOfBallsToSpawn; i++)
             {
                 GameObject new_ball = (GameObject)GameObject.Instantiate(ball_go);
@@ -243,8 +239,13 @@ public class Floor : MonoBehaviour
                 ballScript.floor = this;
                 new_ball.GetComponent<Ball>().Reset();
             }
-            ballCreatedCounter += amountOfBallsToSpawn;
         }
+    }
+
+    public void AddExternalPoints(int poinstAdded)
+    {
+        if (OnScoreAdding != null)
+            OnScoreAdding(poinstAdded);
     }
 
     void OnGUI()

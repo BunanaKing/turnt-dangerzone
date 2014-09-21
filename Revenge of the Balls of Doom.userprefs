@@ -1,8 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Spam Bar\SpamBarScript.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Floor.cs">
     <Files>
-      <File FileName="Assets\Scripts\Spam Bar\SpamBarScript.cs" Line="98" Column="2" />
+      <File FileName="..\Leap Motion - Unity\IBM\Desarrollo IBM\Assets\Scripts\CloudMover.cs" Line="106" Column="5" />
+      <File FileName="C:\Users\Dado\Desktop\Ejemplo Lerp\Assets\Timer.cs" Line="1" Column="1" />
+      <File FileName="..\Leap Motion - Unity\IBM\Desarrollo IBM\Assets\Scripts\CatchLostFiles.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Floor.cs" Line="12" Column="41" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
