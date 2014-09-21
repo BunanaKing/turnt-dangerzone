@@ -848,8 +848,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball_go: {fileID: 100000, guid: 144949be511c390498f805d87fb39d34, type: 2}
+  ballSpecial_go: {fileID: 100002, guid: a30956b8cdff54048b01d795f9802dbb, type: 2}
   ballDestroyedCounter: 0
-  ballCreatedCounter: 0
   maxAmountOfBalls: 20
   initAmountOfBalls: 20
   colorButtonsSum: 0
