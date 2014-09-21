@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{32DCBE45-8B4F-6A98-9525-532B46A1A6E1}</ProjectGuid>
+	<ProjectGuid>{198BF8B5-9BDC-4A3C-306D-E9F6493E44A3}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -57,7 +57,6 @@
      <Compile Include="Assets\Scripts\Spam Bar\SpamBarScript.cs" />
      <Compile Include="Assets\Scripts\StartScreen.cs" />
      <Compile Include="Assets\Scripts\Timer.cs" />
-     <Compile Include="Assets\Scripts\UIElement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

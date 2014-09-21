@@ -36,7 +36,7 @@ public class Ball : MonoBehaviour
     public void Reset()
     {
         transform.position = new Vector2(Random.Range(-2, 2), Random.Range(8, 14));
-        float scale = Random.Range(0.2f, 1f);
+        float scale = Random.Range(0.4f, 0.8f);
         transform.localScale = new Vector3(scale, scale);
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
         float r = Random.value;

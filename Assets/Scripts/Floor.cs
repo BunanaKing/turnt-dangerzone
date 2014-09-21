@@ -9,13 +9,13 @@ public class Floor : MonoBehaviour
     public GameObject ball_go;
     public int ballDestroyedCounter = 0;
     public int ballCreatedCounter = 0;
-    public int maxAmountOfBalls = 30;
-    public int[] spawnLevels;
+    public int maxAmountOfBalls = 20;    
 
     public int initAmountOfBalls = 5;
 
-    private int currentIncrement = 0;
-    private int amountOfBallsToSpawn = 1;
+    //public int[] spawnLevels;
+    //private int currentIncrement = 0;
+    //private int amountOfBallsToSpawn = 1;
 
     private SpriteRenderer spriteRenderer;
     private int ballsIdIndex = 1;
@@ -42,6 +42,11 @@ public class Floor : MonoBehaviour
         ballCreatedCounter += initAmountOfBalls;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        CreateStartBalls(initAmountOfBalls);
+    }
+
+    private void CreateStartBalls(int initAmountOfBalls)
+    {
         for (int i = 0; i < initAmountOfBalls; i++)
         {
             GameObject new_ball = (GameObject)GameObject.Instantiate(ball_go);
@@ -174,11 +179,12 @@ public class Floor : MonoBehaviour
                         ballCreatedCounter--;
 
                         if (OnScoreAdding != null)
-                            OnScoreAdding(100);
-
-                        CreateNewBalls();
+                            OnScoreAdding(100);                        
                     }
                 }
+
+                CreateNewBalls(ballsToKill.Count);
+
                 foreach (Ball ball in ballsToKill)
                 {
                     Destroy(ball.gameObject);
@@ -215,25 +221,25 @@ public class Floor : MonoBehaviour
             if (OnScoreAdding != null)
                 OnScoreAdding(100);
 
-            CreateNewBalls();
+            CreateNewBalls(1);
 
             Destroy(ball.gameObject);
             ballsColliding.Remove(ball);
         }
     }
 
-    private void CreateNewBalls()
+    private void CreateNewBalls(int amountOfBallsToSpawn)
     {
-        if (ballCreatedCounter < maxAmountOfBalls)
+        if (ballCreatedCounter < maxAmountOfBalls && amountOfBallsToSpawn > 0)
         {
-            if (currentIncrement < spawnLevels.Length - 1)
-            {
-                if (ballDestroyedCounter > spawnLevels[currentIncrement])
-                {
-                    currentIncrement++;
-                    amountOfBallsToSpawn++;
-                }
-            }
+            //if (currentIncrement < spawnLevels.Length - 1)
+            //{
+            //    if (ballDestroyedCounter > spawnLevels[currentIncrement])
+            //    {
+            //        currentIncrement++;
+            //        amountOfBallsToSpawn++;
+            //    }
+            //}
 
             for (int i = 0; i < amountOfBallsToSpawn; i++)
             {
