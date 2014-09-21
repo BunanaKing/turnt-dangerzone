@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class Floor : MonoBehaviour
@@ -20,7 +19,8 @@ public class Floor : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private int ballsIdIndex = 1;
-    private Dictionary<int, Color> ballsColliding = new Dictionary<int, Color>();
+    private List<Ball> ballsColliding;
+    private List<Ball> ballsToKill;
     bool existsError = false;
     bool spamOverHeated = false;
     private bool ended = false;
@@ -37,6 +37,8 @@ public class Floor : MonoBehaviour
         spam.spamFull = SpamFull;
         spam.spamEmpty = SpamEmpty;
 
+        ballsColliding = new List<Ball>();
+        ballsToKill = new List<Ball>();
         ballCreatedCounter += initAmountOfBalls;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -52,12 +54,13 @@ public class Floor : MonoBehaviour
 
     void Update()
     {
-        Color aux = Color.black;
         if (!ended)
         {
-
             if (timeUntilError > 0)
+            {
                 timeUntilError -= Time.time;
+            }
+
             if (timeUntilError <= 0)
             {
                 if (existsError)
@@ -66,35 +69,7 @@ public class Floor : MonoBehaviour
                     IncrementKarmaMeter();
                 }
             }
-
-            switch (colorButtonsSum)
-            {
-                case 1:
-                    aux = Color.red;
-                    break;
-                case 33:
-                    aux = Color.yellow;
-                    break;
-                case 77:
-                    aux = Color.blue;
-                    break;
-                case 34:
-                    aux = new Color(255 / 255F, 120 / 255F, 0F);
-                    break;
-                case 78:
-                    aux = new Color(178 / 255F, 0F, 255 / 255F);
-                    break;
-                case 110:
-                    aux = Color.green;
-                    break;
-                case 111:
-                    aux = Color.white;
-                    break;
-            }
-
         }
-        spriteRenderer.color = aux;
-
     }
 
     public void IncrementKarmaMeter()
@@ -102,69 +77,49 @@ public class Floor : MonoBehaviour
         spam.Increase();
     }
 
-    public void AddColor(Button.BallColor color)
+    public void AddColor(Button.ButtonColor color)
     {
         if (spamOverHeated)
             return;
 
+        UpdateColor(color, true);
+
+        KillBalls();
+    }
+
+    public void RemoveColor(Button.ButtonColor color)
+    {
+        if (spamOverHeated)
+            return;
+
+        UpdateColor(color, false);
+
+        if (colorButtonsSum != 0)
+            KillBalls();
+    }
+
+    private void UpdateColor(Button.ButtonColor color, bool add)
+    {
         switch (color)
         {
-            case Button.BallColor.Red:
-                colorButtonsSum += 1;
+            case Button.ButtonColor.Red:
+                colorButtonsSum += add ? 1 : -1;
                 break;
-            case Button.BallColor.Blue:
-                colorButtonsSum += 77;
+            case Button.ButtonColor.Blue:
+                colorButtonsSum += add ? 77 : -77;
                 break;
-            case Button.BallColor.Yellow:
-                colorButtonsSum += 33;
-                break;
-        }
-
-        Color aux = Color.black;
-        switch (colorButtonsSum)
-        {
-            case 1:
-                aux = Color.red;
-                break;
-            case 33:
-                aux = Color.yellow;
-                break;
-            case 77:
-                aux = Color.blue;
-                break;
-            case 34:
-                aux = new Color(255 / 255F, 120 / 255F, 0F);
-                break;
-            case 78:
-                aux = new Color(178 / 255F, 0F, 255 / 255F);
-                break;
-            case 110:
-                aux = Color.green;
-                break;
-            case 111:
-                aux = Color.white;
+            case Button.ButtonColor.Yellow:
+                colorButtonsSum += add ? 33 : -33;
                 break;
         }
-
-        timeUntilError = 0.2f;
-        if (IsColorColliding(aux))
-        {
-            if (existsError)
-            {
-                existsError = false;
-            }
-        }
-        else
-        {
-            existsError = true;
-        }
+        spriteRenderer.color = BallColor.ColorByValue(colorButtonsSum);
     }
 
     private bool IsColorColliding(Color barColor)
     {
-        foreach (Color item in ballsColliding.Values)
+        foreach (Ball ball in ballsColliding)
         {
-            if (barColor == item)
+            if (ball.realColor == barColor)
             {
                 return true;
             }
@@ -172,89 +127,123 @@ public class Floor : MonoBehaviour
         return false;
     }
 
-    public void RemoveColor(Button.BallColor color)
-    {
-        if (spamOverHeated)
-            return;
-
-        switch (color)
-        {
-            case Button.BallColor.Red:
-                colorButtonsSum -= 1;
-                break;
-            case Button.BallColor.Blue:
-                colorButtonsSum -= 77;
-                break;
-            case Button.BallColor.Yellow:
-                colorButtonsSum -= 33;
-                break;
-        }
-    }
-
-    public void NotifyBallCollision(int id, Color ballColor)
+    public void NotifyBallCollision(Ball ball)
     {
         if (!ended)
         {
-            if (!ballsColliding.ContainsKey(id))
+            if (!ballsColliding.Contains(ball))
             {
-                ballsColliding[id] = ballColor;
+                ballsColliding.Add(ball);
+                TryKillBall(ball);
             }
         }
     }
 
-    public void NotifyBallExitCollision(int id)
+    public void NotifyBallExitCollision(Ball ball)
     {
         if (!ended)
-        {
-            if (ballsColliding.ContainsKey(id))
-            {
-                ballsColliding.Remove(id);
-                //Debug.Log("Remuevo del dicc, iD: " + id);
-            }
-        }
+            ballsColliding.Remove(ball);
     }
 
-    private void OnCollisionStay2D(Collision2D collider)
+    private void KillBalls()
     {
         if (!ended)
         {
-            if (collider.gameObject.tag == "Ball")
+            if (colorButtonsSum == 0)
             {
-                Ball ball = collider.gameObject.GetComponent<Ball>();
-
-                // && esto quiere decir que esta cambiando de color
-                if (ball.GetComponent<SpriteRenderer>().color == spriteRenderer.color && timeUntilError <= 0)
+                timeUntilError = 0.2f;
+                if (existsError)
                 {
-                    Destroy(collider.gameObject);
-                    ballsColliding.Remove(ball.id);
-                    ballDestroyedCounter++;
-                    ballCreatedCounter--;
-                    if (OnScoreAdding != null)
-                        OnScoreAdding(100);
-
-                    if (ballCreatedCounter < maxAmountOfBalls)
-                    {
-                        if (currentIncrement < spawnLevels.Length - 1)
-                        {
-                            if (ballDestroyedCounter > spawnLevels[currentIncrement])
-                            {
-                                currentIncrement++;
-                                amountOfBallsToSpawn++;
-                            }
-                        }
-
-                        for (int i = 0; i < amountOfBallsToSpawn; i++)
-                        {
-                            GameObject new_ball = (GameObject)GameObject.Instantiate(ball_go);
-                            Ball ballScript = new_ball.GetComponent<Ball>();
-                            ballScript.id = ballsIdIndex++;
-                            ballScript.floor = this;
-                            new_ball.GetComponent<Ball>().Reset();
-                        }
-                        ballCreatedCounter += amountOfBallsToSpawn;
-                    }
+                    IncrementKarmaMeter();
+                    existsError = false;
                 }
             }
+
+            if (CanKillBalls())
+            {
+                bool anyKill = false;
+                ballsToKill.Clear();
+                foreach (Ball ball in ballsColliding)
+                {
+                    if (ball.realColor == spriteRenderer.color)
+                    {
+                        anyKill = true;
+
+                        ballsToKill.Add(ball);
+                        ballDestroyedCounter++;
+                        ballCreatedCounter--;
+
+                        if (OnScoreAdding != null)
+                            OnScoreAdding(100);
+
+                        CreateNewBalls();
+                    }
+                }
+                foreach (Ball ball in ballsToKill)
+                {
+                    Destroy(ball.gameObject);
+                    ballsColliding.Remove(ball);
+                }
+
+                if (anyKill)
+                {
+                    if (existsError)
+                    {
+                        existsError = false;
+                    }
+                }
+                else
+                {
+                    existsError = true;
+                }
+            }
+        }
+    }
+    private bool CanKillBalls()
+    {
+        return timeUntilError <= 0;
+    }
+
+    private void TryKillBall(Ball ball)
+    {
+        if (!ended && CanKillBalls() && ball.realColor == spriteRenderer.color)
+        {
+            ballsToKill.Add(ball);
+            ballDestroyedCounter++;
+            ballCreatedCounter--;
+
+            if (OnScoreAdding != null)
+                OnScoreAdding(100);
+
+            CreateNewBalls();
+
+            Destroy(ball.gameObject);
+            ballsColliding.Remove(ball);
+        }
+    }
+
+    private void CreateNewBalls()
+    {
+        if (ballCreatedCounter < maxAmountOfBalls)
+        {
+            if (currentIncrement < spawnLevels.Length - 1)
+            {
+                if (ballDestroyedCounter > spawnLevels[currentIncrement])
+                {
+                    currentIncrement++;
+                    amountOfBallsToSpawn++;
+                }
+            }
+
+            for (int i = 0; i < amountOfBallsToSpawn; i++)
+            {
+                GameObject new_ball = (GameObject)GameObject.Instantiate(ball_go);
+                Ball ballScript = new_ball.GetComponent<Ball>();
+                ballScript.id = ballsIdIndex++;
+                ballScript.floor = this;
+                new_ball.GetComponent<Ball>().Reset();
+            }
+            ballCreatedCounter += amountOfBallsToSpawn;
         }
     }
 

@@ -16,34 +16,34 @@ public class ButtonsControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            floor.AddColor(Button.BallColor.Red);
+            floor.AddColor(Button.ButtonColor.Red);
             button_red.PressButton();
         }
         else if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            floor.RemoveColor(Button.BallColor.Red);
+            floor.RemoveColor(Button.ButtonColor.Red);
             button_red.ReleaseButton();
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            floor.AddColor(Button.BallColor.Yellow);
+            floor.AddColor(Button.ButtonColor.Yellow);
             button_yellow.PressButton();
         }
         else if (Input.GetKeyUp(KeyCode.DownArrow))
         {
-            floor.RemoveColor(Button.BallColor.Yellow);
+            floor.RemoveColor(Button.ButtonColor.Yellow);
             button_yellow.ReleaseButton();
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            floor.AddColor(Button.BallColor.Blue);
+            floor.AddColor(Button.ButtonColor.Blue);
             button_blue.PressButton();
         }
         else if (Input.GetKeyUp(KeyCode.RightArrow))
         {
-            floor.RemoveColor(Button.BallColor.Blue);
+            floor.RemoveColor(Button.ButtonColor.Blue);
             button_blue.ReleaseButton();
         }
 

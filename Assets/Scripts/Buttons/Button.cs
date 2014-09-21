@@ -3,14 +3,15 @@ using System.Collections;
 
 public class Button : MonoBehaviour
 {
-    public enum BallColor { Red, Yellow, Blue, Green, Orange, Purple }
+    public enum ButtonColor { Red, Yellow, Blue }
 
-    public BallColor color;
+    public ButtonColor color;
 
     public Sprite buttonImage;
     public Sprite pressedButtonImage;
 
     SpriteRenderer spriteRenderer;
+
     void Start()
     {
         spriteRenderer = this.GetComponent<SpriteRenderer>();
