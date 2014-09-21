@@ -6,17 +6,32 @@ using System.Text;
 
 namespace Assets.Scripts.Balls
 {
-
     public class ColorBombBall : MonoBehaviour, ISpecialBall
     {
         private float timeToLive = 0;
-        public void Initialize(float _timeToLive)
+        private float timeCreated = 0;
+        private Floor floor;
+
+        void Start()
+        {
+            GameObject floor_go = GameObject.FindGameObjectWithTag("Floor");
+            if (floor_go != null)
+                floor = floor_go.GetComponent<Floor>();
+
+            if (floor == null)
+                Debug.LogError("ColorBombBall can't find Floor!");
+
+        }
+
+        public void Initialize(float _timeToLive, float _timeCreated)
         {
             timeToLive = _timeToLive;
+            timeCreated = _timeCreated;
         }
-        public void CheckLifeTimer(float _timeCreated)
+
+        public void CheckLifeTimer()
         {
-            float timeLived = Time.time - _timeCreated;
+            float timeLived = Time.time - timeCreated;
             //Agregar visualmente el tiempo de vida de la bola
             //Debug.Log("TimeLived: " + timeLived);
             if (timeLived > timeToLive)
@@ -25,7 +40,7 @@ namespace Assets.Scripts.Balls
             }
         }
 
-        public void MakeSpecialty(Floor _floor, Color _realColor)
+        public void MakeSpecialty(Color _realColor)
         {
             GameObject[] ballsOfSameColor = GameObject.FindGameObjectsWithTag("Ball");
 
@@ -42,8 +57,8 @@ namespace Assets.Scripts.Balls
                 }
 
             }
-            _floor.CreateNewBalls(ballsDestroyed);
-            _floor.AddExternalPoints(amountOfPointsToAdd);
+            floor.CreateNewBalls(ballsDestroyed);
+            floor.AddExternalPoints(amountOfPointsToAdd);
         }
     }
 }

@@ -8,7 +8,7 @@ public class Ball : MonoBehaviour
     public Floor floor;
     public int points = 100;
     public bool specialBall = false;
-    float timeCreated;
+    float timeCreated = 0;
     float timeToLive = 8f;
 
     bool deadBall = false;
@@ -18,7 +18,7 @@ public class Ball : MonoBehaviour
     public void SetSpecialBallType(ISpecialBall _specialBallType)
     {
         specialBallType = _specialBallType;
-        specialBallType.Initialize(this.timeToLive);
+        specialBallType.Initialize(this.timeToLive, this.timeCreated);
     }
 
     void Start()
@@ -32,7 +32,7 @@ public class Ball : MonoBehaviour
 
         if (specialBall && !deadBall)
         {
-            this.specialBallType.CheckLifeTimer(timeCreated);
+            this.specialBallType.CheckLifeTimer();
         }
     }
 
@@ -94,7 +94,7 @@ public class Ball : MonoBehaviour
         if (specialBall)
         {
             //Do Bonus Speciallity
-            specialBallType.MakeSpecialty(this.floor, this.realColor);
+            specialBallType.MakeSpecialty(this.realColor);
         }
 
         Destroy(this.gameObject);
