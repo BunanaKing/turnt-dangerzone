@@ -9,10 +9,7 @@ public class Floor : MonoBehaviour
     public GameObject ball_go;
     public GameObject ballSpecial_go;
     public int ballDestroyedCounter = 0;
-    //public int ballCreatedCounter = 0;
-    public int maxAmountOfBalls = 20;
-
-    public int initAmountOfBalls = 5;
+    public int initAmountOfBalls = 20;
 
     private SpriteRenderer spriteRenderer;
     private int ballsIdIndex = 1;
@@ -36,7 +33,6 @@ public class Floor : MonoBehaviour
 
         ballsColliding = new List<Ball>();
         ballsToKill = new List<Ball>();
-        //ballCreatedCounter += initAmountOfBalls;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         CreateStartBalls(initAmountOfBalls);
@@ -181,7 +177,6 @@ public class Floor : MonoBehaviour
 
                         ballsToKill.Add(ball);
                         ballDestroyedCounter++;
-                        //ballCreatedCounter--;
 
                         if (OnScoreAdding != null)
                             OnScoreAdding(100);                        
@@ -221,7 +216,6 @@ public class Floor : MonoBehaviour
         {
             ballsToKill.Add(ball);
             ballDestroyedCounter++;
-            //ballCreatedCounter--;
 
             if (OnScoreAdding != null)
                 OnScoreAdding(100);
@@ -235,7 +229,7 @@ public class Floor : MonoBehaviour
 
     public void CreateNewBalls(int amountOfBallsToSpawn)
     {
-        if (/*ballCreatedCounter < maxAmountOfBalls && */amountOfBallsToSpawn > 0)
+        if (amountOfBallsToSpawn > 0)
         {
             for (int i = 0; i < amountOfBallsToSpawn; i++)
             {
@@ -245,7 +239,6 @@ public class Floor : MonoBehaviour
                 ballScript.floor = this;
                 new_ball.GetComponent<Ball>().Reset();
             }
-            //ballCreatedCounter += amountOfBallsToSpawn;
         }
     }
 
