@@ -13,6 +13,14 @@ public class Ball : MonoBehaviour
 
     bool deadBall = false;
 
+    private ISpecialBall specialBallType;
+
+    public void SetSpecialBallType(ISpecialBall _specialBallType)
+    {
+        specialBallType = _specialBallType;
+        specialBallType.Initialize(this.timeToLive);
+    }
+
     void Start()
     {
     }
@@ -22,23 +30,9 @@ public class Ball : MonoBehaviour
         //Acelerometro
         transform.Translate(Accelerometer.X(), 0, 0);
 
-        if (specialBall)
+        if (specialBall && !deadBall)
         {
-            CheckLifeTimer();
-        }
-    }
-
-    void CheckLifeTimer()
-    {
-        if (!deadBall)
-        {
-            float timeLived = Time.time - timeCreated;
-            //Agregar visualmente el tiempo de vida de la bola
-            //Debug.Log("TimeLived: " + timeLived);
-            if (timeLived > timeToLive)
-            {
-                Destroy(this.gameObject);
-            }
+            this.specialBallType.CheckLifeTimer(timeCreated);
         }
     }
 
@@ -100,31 +94,10 @@ public class Ball : MonoBehaviour
         if (specialBall)
         {
             //Do Bonus Speciallity
-            MakeSpecialty();
+            specialBallType.MakeSpecialty(this.floor, this.realColor);
         }
 
         Destroy(this.gameObject);
     }
 
-    void MakeSpecialty()
-    {
-        //Caso pelota que destruye todas las del mismo color.
-        GameObject[] ballsOfSameColor = GameObject.FindGameObjectsWithTag("Ball");
-
-        int amountOfPointsToAdd = 0;
-        int ballsDestroyed = 0;
-        foreach (GameObject ball in ballsOfSameColor)
-        {
-            Ball ballScript = ball.GetComponent<Ball>();
-            if (ballScript != null && ballScript.realColor == this.realColor)
-            {
-                amountOfPointsToAdd += ballScript.points;
-                ballsDestroyed++;
-                Destroy(ball);
-            }
-
-        }
-        floor.CreateNewBalls(ballsDestroyed);
-        floor.AddExternalPoints(amountOfPointsToAdd);
-    }
 }
