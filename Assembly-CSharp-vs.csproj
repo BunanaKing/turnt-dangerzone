@@ -49,6 +49,8 @@
      <Compile Include="Assets\Scripts\Accelerometer.cs" />
      <Compile Include="Assets\Scripts\BallColor.cs" />
      <Compile Include="Assets\Scripts\Balls\Ball.cs" />
+     <Compile Include="Assets\Scripts\Balls\ColorBombBall.cs" />
+     <Compile Include="Assets\Scripts\Balls\ISpecialBall.cs" />
      <Compile Include="Assets\Scripts\Buttons\Button.cs" />
      <Compile Include="Assets\Scripts\Buttons\ButtonsControl.cs" />
      <Compile Include="Assets\Scripts\Floor.cs" />

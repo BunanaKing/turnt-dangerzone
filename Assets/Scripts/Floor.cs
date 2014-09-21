@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Assets.Scripts.Balls;
 
 public class Floor : MonoBehaviour
 {
@@ -56,6 +57,7 @@ public class Floor : MonoBehaviour
         ballSpecialScript.floor = this;
         ballSpecialScript.specialBall = true;
         ballSpecialScript.Reset();
+        ballSpecialScript.SetSpecialBallType(new ColorBombBall());
     }
 
     void Update()
