@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Ball : MonoBehaviour
 {
-    public Button.BallColor color;
+    public Color realColor { get; private set; }
     public int id;
     public Floor floor;
 
@@ -23,14 +23,14 @@ public class Ball : MonoBehaviour
         {
             Color ballColor = this.GetComponent<SpriteRenderer>().color;
 
-            floor.NotifyBallCollision(this.id, ballColor);
+            floor.NotifyBallCollision(this);
         }
     }
 
     private void OnCollisionExit2D(Collision2D collider)
     {
         if (collider.gameObject.tag == "Floor")
-            floor.NotifyBallExitCollision(this.id);
+            floor.NotifyBallExitCollision(this);
     }
 
     public void Reset()
@@ -42,33 +42,28 @@ public class Ball : MonoBehaviour
         float r = Random.value;
         if (r < 0.25)
         {
-            color = Button.BallColor.Red;
-            renderer.color = Color.red;
+            realColor = BallColor.Red;
         }
         else if (r < 0.5)
         {
-            color = Button.BallColor.Yellow;
-            renderer.color = Color.yellow;
+            realColor = BallColor.Yellow;
         }
         else if (r < 0.75)
         {
-            color = Button.BallColor.Blue;
-            renderer.color = Color.blue;
+            realColor = BallColor.Blue;
         }
         else if (r < 0.833333)
         {
-            color = Button.BallColor.Purple;
-            renderer.color = new Color(178 / 255F, 0F, 255 / 255F);
+            realColor = BallColor.Purple;
         }
         else if (r < 0.9166666)
         {
-            color = Button.BallColor.Green;
-            renderer.color = Color.green;
+            realColor = BallColor.Green;
         }
         else
         {
-            color = Button.BallColor.Orange;
-            renderer.color = new Color(255 / 255F, 120 / 255F, 0F);
+            realColor = BallColor.Orange;
         }
+        renderer.color = realColor;
     }
 }

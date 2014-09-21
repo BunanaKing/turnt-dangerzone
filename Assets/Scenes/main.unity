@@ -305,10 +305,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027c9320b28ca9245b868eb3f94e643a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttons:
-  - {fileID: 279433540}
-  - {fileID: 1432259667}
-  - {fileID: 999997974}
+  button_red: {fileID: 279433540}
+  button_yellow: {fileID: 1432259667}
+  button_blue: {fileID: 999997974}
   floor: {fileID: 710042700}
 --- !u!1001 &363724213
 Prefab:
