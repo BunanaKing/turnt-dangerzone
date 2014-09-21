@@ -11,22 +11,20 @@ namespace Assets.Scripts.Balls
         private float timeToLive = 0;
         private float timeCreated = 0;
         private Floor floor;
+        GameObject parent_go;
 
-        void Start()
+        public void Initialize(float _timeToLive, float _timeCreated, GameObject _parent_go)
         {
+            timeToLive = _timeToLive;
+            timeCreated = _timeCreated;
+            parent_go = _parent_go;
+
             GameObject floor_go = GameObject.FindGameObjectWithTag("Floor");
             if (floor_go != null)
                 floor = floor_go.GetComponent<Floor>();
 
             if (floor == null)
                 Debug.LogError("ColorBombBall can't find Floor!");
-
-        }
-
-        public void Initialize(float _timeToLive, float _timeCreated)
-        {
-            timeToLive = _timeToLive;
-            timeCreated = _timeCreated;
         }
 
         public void CheckLifeTimer()
@@ -36,11 +34,11 @@ namespace Assets.Scripts.Balls
             //Debug.Log("TimeLived: " + timeLived);
             if (timeLived > timeToLive)
             {
-                Destroy(this.gameObject);
+                Destroy(this.parent_go);
             }
         }
 
-        public void MakeSpecialty(Color _realColor)
+        public bool MakeSpeciality(Color _realColor)
         {
             GameObject[] ballsOfSameColor = GameObject.FindGameObjectsWithTag("Ball");
 
@@ -59,6 +57,8 @@ namespace Assets.Scripts.Balls
             }
             floor.CreateNewBalls(ballsDestroyed);
             floor.AddExternalPoints(amountOfPointsToAdd);
+
+            return true;
         }
     }
 }

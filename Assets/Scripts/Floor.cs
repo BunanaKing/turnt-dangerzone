@@ -185,13 +185,18 @@ public class Floor : MonoBehaviour
                     }
                 }
 
-                CreateNewBalls(ballsToKill.Count);
-
+                int ballsToCreate = 0;
                 foreach (Ball ball in ballsToKill)
                 {
-                    ball.DestroyYourself();
-                    ballsColliding.Remove(ball);
+                    bool destroyed = ball.DestroyYourself();
+                    if (destroyed)
+                    {
+                        ballsToCreate++;
+                        ballsColliding.Remove(ball);
+                    }
                 }
+
+                CreateNewBalls(ballsToCreate);
 
                 if (anyKill)
                 {
