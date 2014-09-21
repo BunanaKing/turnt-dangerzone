@@ -11,7 +11,7 @@ public class Timer : MonoBehaviour
     private float addedSeconds = 0;
 
     public int countDownSeconds;
-    public GUIText timerText;
+    public TextMesh timerText;
 
     void Start()
     {
