@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Score : MonoBehaviour
 {
-    public GUIText scoreText;
+    public TextMesh scoreText;
     private int score = 0;
 
     // Use this for initialization
