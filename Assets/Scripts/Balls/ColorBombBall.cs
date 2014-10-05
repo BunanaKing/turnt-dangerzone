@@ -47,11 +47,11 @@ namespace Assets.Scripts.Balls
             foreach (GameObject ball in ballsOfSameColor)
             {
                 Ball ballScript = ball.GetComponent<Ball>();
-                if (ballScript != null && ballScript.realColor == _realColor)
+                if (ballScript != null && !ballScript.specialBall && ballScript.realColor == _realColor)
                 {
                     amountOfPointsToAdd += ballScript.points;
                     ballsDestroyed++;
-                    Destroy(ball);
+                    ballScript.DestroyYourself();                    
                 }
 
             }

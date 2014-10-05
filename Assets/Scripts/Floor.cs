@@ -59,7 +59,7 @@ public class Floor : MonoBehaviour
         ballSpecialScript.Reset();
         ballSpecialScript.SetSpecialBallType(new UnbreakableBall());
 
-        //Crear una special ball de prueba BombBall
+        //Crear una special ball de prueba ColorBombBall        
         GameObject newBombBall = (GameObject)GameObject.Instantiate(ballSpecial_go);
         Ball newBombBallScript = newBombBall.GetComponent<Ball>();
         newBombBallScript.id = ballsIdIndex++;
@@ -67,6 +67,15 @@ public class Floor : MonoBehaviour
         newBombBallScript.specialBall = true;
         newBombBallScript.Reset();
         newBombBallScript.SetSpecialBallType(new ColorBombBall());
+        
+        //Crear una special ball de prueba BigFatBall        
+        GameObject newBigFatBall = (GameObject)GameObject.Instantiate(ballSpecial_go);
+        Ball newBigFatScript = newBigFatBall.GetComponent<Ball>();
+        newBigFatScript.id = ballsIdIndex++;
+        newBigFatScript.floor = this;
+        newBigFatScript.specialBall = true;
+        newBigFatScript.Reset();
+        newBigFatScript.SetSpecialBallType(new BigFatBall());
     }
 
     void Update()
@@ -202,7 +211,7 @@ public class Floor : MonoBehaviour
 
                         if (OnScoreAdding != null)
                             OnScoreAdding(ball.points);
-                        ballsColliding.Remove(ball);
+                        //ballsColliding.Remove(ball);
                     }
                 }
 

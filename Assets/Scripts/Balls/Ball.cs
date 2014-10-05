@@ -98,8 +98,15 @@ public class Ball : MonoBehaviour
         }
 
         if (deadBall)
-            Destroy(this.gameObject);
+        {
+            Destroy(this.gameObject);            
+        }
         return deadBall;
+    }
+
+    void OnDestroy()
+    {
+        floor.NotifyBallExitCollision(this);
     }
 
 }

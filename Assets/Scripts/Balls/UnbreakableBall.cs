@@ -27,7 +27,7 @@ namespace Assets.Scripts.Balls
                 floor = floor_go.GetComponent<Floor>();
 
             if (floor == null)
-                Debug.LogError("ColorBombBall can't find Floor!");
+                Debug.LogError("UnbreakableBall can't find Floor!");
         }
 
         public void CheckLifeTimer()

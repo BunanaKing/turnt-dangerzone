@@ -1,11 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Floor.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\Leap Motion - Unity\IBM\Desarrollo IBM\Assets\Scripts\DisplayGBs.cs">
     <Files>
-      <File FileName="..\Leap Motion - Unity\IBM\Desarrollo IBM\Assets\Scripts\CloudMover.cs" Line="106" Column="5" />
-      <File FileName="C:\Users\Dado\Desktop\Ejemplo Lerp\Assets\Timer.cs" Line="1" Column="1" />
-      <File FileName="..\Leap Motion - Unity\IBM\Desarrollo IBM\Assets\Scripts\CatchLostFiles.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Floor.cs" Line="12" Column="41" />
+      <File FileName="..\Leap Motion - Unity\IBM\Desarrollo IBM\Assets\Scripts\DisplayGBs.cs" Line="60" Column="10" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
