@@ -50,6 +50,8 @@ public class Floor : MonoBehaviour
             ballScript.Reset();
         }
 
+        //TODO: Todo el codigo siguiente se debe sacar cuando se implemente la creación de bolas especiales aleatoriamente
+
         //Crear una special ball de prueba UnBreakable
         GameObject newBallSpecial = (GameObject)GameObject.Instantiate(ballSpecial_go);
         Ball ballSpecialScript = newBallSpecial.GetComponent<Ball>();
@@ -85,6 +87,15 @@ public class Floor : MonoBehaviour
         newFloodcript.specialBall = true;
         newFloodcript.Reset();
         newFloodcript.SetSpecialBallType(new FloodBall());
+
+        //Crear una special ball de prueba FloodBall        
+        GameObject newFreezeBall = (GameObject)GameObject.Instantiate(ballSpecial_go);
+        Ball newFreezecript = newFreezeBall.GetComponent<Ball>();
+        newFreezecript.id = ballsIdIndex++;
+        newFreezecript.floor = this;
+        newFreezecript.specialBall = true;
+        newFreezecript.Reset();
+        newFreezecript.SetSpecialBallType(new FreezeBall());
     }
 
     void Update()

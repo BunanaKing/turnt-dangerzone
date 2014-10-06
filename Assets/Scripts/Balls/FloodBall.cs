@@ -45,9 +45,7 @@ public class FloodBall : MonoBehaviour, ISpecialBall
             {
                 ballScript.SetNewColor(_realColor);
             }
-
         }
-
         return true;
     }
 }

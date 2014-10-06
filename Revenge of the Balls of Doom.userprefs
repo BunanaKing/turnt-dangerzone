@@ -1,8 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\Leap Motion - Unity\IBM\Desarrollo IBM\Assets\Scripts\DisplayGBs.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Balls\Ball.cs">
     <Files>
-      <File FileName="..\Leap Motion - Unity\IBM\Desarrollo IBM\Assets\Scripts\DisplayGBs.cs" Line="60" Column="10" />
+      <File FileName="Assets\Scripts\Balls\Ball.cs" Line="91" Column="32" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

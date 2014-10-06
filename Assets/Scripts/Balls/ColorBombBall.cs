@@ -52,13 +52,11 @@ namespace Assets.Scripts.Balls
                 {
                     amountOfPointsToAdd += ballScript.points;
                     ballsDestroyed++;
-                    ballScript.DestroyYourself();                    
+                    ballScript.DestroyYourself();
                 }
-
             }
             floor.CreateNewBalls(ballsDestroyed);
             floor.AddExternalPoints(amountOfPointsToAdd);
-
             return true;
         }
     }

@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\Balls\BigFatBall.cs" />
      <Compile Include="Assets\Scripts\Balls\ColorBombBall.cs" />
      <Compile Include="Assets\Scripts\Balls\FloodBall.cs" />
+     <Compile Include="Assets\Scripts\Balls\FreezeBall.cs" />
      <Compile Include="Assets\Scripts\Balls\ISpecialBall.cs" />
      <Compile Include="Assets\Scripts\Balls\UnbreakableBall.cs" />
      <Compile Include="Assets\Scripts\Buttons\Button.cs" />

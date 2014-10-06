@@ -3,14 +3,13 @@ using System.Collections;
 
 public class Timer : MonoBehaviour
 {
-    private float startTime;
     private float restSeconds;
     private float roundedRestSeconds;
     private float displaySeconds;
     private int displayMinutes;
-    private float addedSeconds = 0;
+    private float freezeLeftTime = 0f;
 
-    public int countDownSeconds;
+    public float countDownSeconds;
     public TextMesh timerText;
 
     void Start()
@@ -20,17 +19,28 @@ public class Timer : MonoBehaviour
     public void StartTimer()
     {
         enabled = true;
-        startTime = Time.time;
+        restSeconds = countDownSeconds;
+    }
+
+    void Update()
+    {
+        if (enabled)
+        {
+            float restingTime = Time.deltaTime;
+            //Chequeamos el Freeze Time
+            if (freezeLeftTime > 0)
+            {
+                freezeLeftTime -= Time.deltaTime;
+                //Bajamos la velocidad del tiempo a la mitad. Visualmente estaría bueno que el reloj tuviera hielo o algo asi
+                restingTime = restingTime / 2;
+                if (freezeLeftTime <= 0) freezeLeftTime = 0;
+            }
+            restSeconds -= restingTime;
+        }
     }
 
     void OnGUI()
-    {
-        //make sure that your time is based on when this script was first called
-        //instead of when your game started
-        int guiTime = (int)(Time.time - startTime);
-
-        restSeconds = countDownSeconds + addedSeconds - guiTime;
-
+    {        
         if (enabled)
         {
             //display messages or whatever here -->do stuff based on your timer
@@ -56,8 +66,9 @@ public class Timer : MonoBehaviour
         //GUI.Label(new Rect(20, 20, 100, 30), text);
     }
 
-    public void Add(int seconds)
+    public void Freeze()
     {
-        addedSeconds += seconds;
+        //Tiempo que dura el efecto
+        freezeLeftTime = 10f; 
     }
 }

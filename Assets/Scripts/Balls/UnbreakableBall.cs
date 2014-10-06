@@ -11,7 +11,7 @@ namespace Assets.Scripts.Balls
         private float timeToLive = 0;
         private float timeCreated = 0;
         private Floor floor;
-        GameObject parent_go;        
+        GameObject parent_go;
         int amountOfHitsLeft = 0;
 
         public void Initialize(float _timeToLive, float _timeCreated, GameObject _parent_go)
@@ -51,12 +51,10 @@ namespace Assets.Scripts.Balls
                 Ball ballScript = parent_go.GetComponent<Ball>();
                 if (ballScript != null)
                     floor.AddExternalPoints(ballScript.points);
-
                 return true;
             }
             else
                 return false;
-            
         }
     }
 }

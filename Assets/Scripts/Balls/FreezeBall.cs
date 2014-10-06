@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BigFatBall : MonoBehaviour, ISpecialBall
+public class FreezeBall : MonoBehaviour, ISpecialBall
 {
     private float timeToLive = 0;
     private float timeCreated = 0;
@@ -13,14 +13,14 @@ public class BigFatBall : MonoBehaviour, ISpecialBall
         timeToLive = _timeToLive;
         timeCreated = _timeCreated;
         parent_go = _parent_go;
-        parent_go.name = "BigFatBall";
+        parent_go.name = "FreezeBall";
 
         GameObject floor_go = GameObject.FindGameObjectWithTag("Floor");
         if (floor_go != null)
             floor = floor_go.GetComponent<Floor>();
 
         if (floor == null)
-            Debug.LogError("BigFatBall can't find Floor!");
+            Debug.LogError("FreezeBall can't find Floor!");
     }
 
     public void CheckLifeTimer()
@@ -36,22 +36,16 @@ public class BigFatBall : MonoBehaviour, ISpecialBall
 
     public bool MakeSpeciality(Color _realColor)
     {
-        GameObject[] ballsOfSameColor = GameObject.FindGameObjectsWithTag("Ball");
+        GameObject timer_GO = GameObject.FindGameObjectWithTag("Timer");
 
-        int amountOfPointsToAdd = 0;
-        int ballsDestroyed = 0;
-        foreach (GameObject ball in ballsOfSameColor)
+        if (timer_GO != null)
         {
-            Ball ballScript = ball.GetComponent<Ball>();
-            if (ballScript != null && ball != this.parent_go && !ballScript.specialBall)
+            Timer timerScript = timer_GO.GetComponent<Timer>();
+            if (timerScript != null)
             {
-                amountOfPointsToAdd += ballScript.points;
-                ballsDestroyed++;
-                ballScript.DestroyYourself();
+                timerScript.Freeze();
             }
         }
-        floor.CreateNewBalls(ballsDestroyed);
-        floor.AddExternalPoints(amountOfPointsToAdd);
         return true;
     }
 }
