@@ -67,7 +67,7 @@ public class Floor : MonoBehaviour
         newBombBallScript.specialBall = true;
         newBombBallScript.Reset();
         newBombBallScript.SetSpecialBallType(new ColorBombBall());
-        
+
         //Crear una special ball de prueba BigFatBall        
         GameObject newBigFatBall = (GameObject)GameObject.Instantiate(ballSpecial_go);
         Ball newBigFatScript = newBigFatBall.GetComponent<Ball>();
@@ -76,6 +76,15 @@ public class Floor : MonoBehaviour
         newBigFatScript.specialBall = true;
         newBigFatScript.Reset();
         newBigFatScript.SetSpecialBallType(new BigFatBall());
+
+        //Crear una special ball de prueba FloodBall        
+        GameObject newFloodBall = (GameObject)GameObject.Instantiate(ballSpecial_go);
+        Ball newFloodcript = newFloodBall.GetComponent<Ball>();
+        newFloodcript.id = ballsIdIndex++;
+        newFloodcript.floor = this;
+        newFloodcript.specialBall = true;
+        newFloodcript.Reset();
+        newFloodcript.SetSpecialBallType(new FloodBall());
     }
 
     void Update()

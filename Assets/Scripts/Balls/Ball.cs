@@ -36,6 +36,13 @@ public class Ball : MonoBehaviour
         }
     }
 
+    public void SetNewColor(Color newColor)
+    {
+        realColor = newColor;
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        renderer.color = realColor;
+    }
+
     private void OnCollisionEnter2D(Collision2D collider)
     {
         if (collider.gameObject.tag == "Floor")

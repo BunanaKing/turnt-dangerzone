@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BigFatBall : MonoBehaviour, ISpecialBall
+public class FloodBall : MonoBehaviour, ISpecialBall
 {
     private float timeToLive = 0;
     private float timeCreated = 0;
@@ -13,14 +13,14 @@ public class BigFatBall : MonoBehaviour, ISpecialBall
         timeToLive = _timeToLive;
         timeCreated = _timeCreated;
         parent_go = _parent_go;
-        parent_go.name = "BigFatBall";
+        parent_go.name = "FloodBall";
 
         GameObject floor_go = GameObject.FindGameObjectWithTag("Floor");
         if (floor_go != null)
             floor = floor_go.GetComponent<Floor>();
 
         if (floor == null)
-            Debug.LogError("BigFatBall can't find Floor!");
+            Debug.LogError("FloodBall can't find Floor!");
     }
 
     public void CheckLifeTimer()
@@ -38,21 +38,15 @@ public class BigFatBall : MonoBehaviour, ISpecialBall
     {
         GameObject[] ballsOfSameColor = GameObject.FindGameObjectsWithTag("Ball");
 
-        int amountOfPointsToAdd = 0;
-        int ballsDestroyed = 0;
         foreach (GameObject ball in ballsOfSameColor)
         {
             Ball ballScript = ball.GetComponent<Ball>();
             if (ballScript != null && ball != this.parent_go && !ballScript.specialBall)
             {
-                amountOfPointsToAdd += ballScript.points;
-                ballsDestroyed++;
-                ballScript.DestroyYourself();                
+                ballScript.SetNewColor(_realColor);
             }
 
         }
-        floor.CreateNewBalls(ballsDestroyed);
-        floor.AddExternalPoints(amountOfPointsToAdd);
 
         return true;
     }

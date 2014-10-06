@@ -11,7 +11,7 @@ namespace Assets.Scripts.Balls
         private float timeToLive = 0;
         private float timeCreated = 0;
         private Floor floor;
-        GameObject parent_go;
+        GameObject parent_go;        
         int amountOfHitsLeft = 0;
 
         public void Initialize(float _timeToLive, float _timeCreated, GameObject _parent_go)
@@ -21,6 +21,7 @@ namespace Assets.Scripts.Balls
             amountOfHitsLeft = 10;
             timeCreated = _timeCreated;
             parent_go = _parent_go;
+            parent_go.name = "UnbreakableBall";
 
             GameObject floor_go = GameObject.FindGameObjectWithTag("Floor");
             if (floor_go != null)

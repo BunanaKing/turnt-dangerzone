@@ -18,6 +18,7 @@ namespace Assets.Scripts.Balls
             timeToLive = _timeToLive;
             timeCreated = _timeCreated;
             parent_go = _parent_go;
+            parent_go.name = "ColorBombBall";
 
             GameObject floor_go = GameObject.FindGameObjectWithTag("Floor");
             if (floor_go != null)
