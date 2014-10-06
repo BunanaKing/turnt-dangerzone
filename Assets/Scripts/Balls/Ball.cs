@@ -48,7 +48,6 @@ public class Ball : MonoBehaviour
         if (collider.gameObject.tag == "Floor")
         {
             Color ballColor = this.GetComponent<SpriteRenderer>().color;
-
             floor.NotifyBallCollision(this);
         }
     }
@@ -104,10 +103,9 @@ public class Ball : MonoBehaviour
             deadBall = specialBallType.MakeSpeciality(this.realColor);
         }
 
-        if (deadBall)
-        {
+        if (deadBall)        
             Destroy(this.gameObject);            
-        }
+        
         return deadBall;
     }
 

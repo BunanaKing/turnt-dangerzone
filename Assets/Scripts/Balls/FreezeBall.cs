@@ -29,9 +29,7 @@ public class FreezeBall : MonoBehaviour, ISpecialBall
         //Agregar visualmente el tiempo de vida de la bola
         //Debug.Log("TimeLived: " + timeLived);
         if (timeLived > timeToLive)
-        {
-            Destroy(this.parent_go);
-        }
+            Destroy(this.parent_go);  
     }
 
     public bool MakeSpeciality(Color _realColor)
@@ -42,9 +40,7 @@ public class FreezeBall : MonoBehaviour, ISpecialBall
         {
             Timer timerScript = timer_GO.GetComponent<Timer>();
             if (timerScript != null)
-            {
-                timerScript.Freeze();
-            }
+                timerScript.Freeze();            
         }
         return true;
     }

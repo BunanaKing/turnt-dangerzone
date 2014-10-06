@@ -29,9 +29,7 @@ public class BigFatBall : MonoBehaviour, ISpecialBall
         //Agregar visualmente el tiempo de vida de la bola
         //Debug.Log("TimeLived: " + timeLived);
         if (timeLived > timeToLive)
-        {
-            Destroy(this.parent_go);
-        }
+            Destroy(this.parent_go);  
     }
 
     public bool MakeSpeciality(Color _realColor)
